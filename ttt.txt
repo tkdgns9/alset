@@ -1,3 +1,375 @@
 https://academy.zerotomastery.io/courses/complete-python-developer-zero-to-mastery/lectures/
 
-감사합니다.
+sh running-config 
+##
+## Running database "initial"
+## Generated at 2024/06/24 09:16:41 +0900
+## Software version on which this output was taken: GigaVUE-OS 5.13.03.04 347192 2022-08-29 18:25:19
+## Hostname: Hantoo-HC2
+##
+
+##
+## Network interface configuration
+##
+interface eth0
+  no dhcp
+  ip address 10.34.100.60 /24
+  exit
+
+##
+## Network interface IPv6 configuration
+##
+interface eth0
+  no ipv6 dhcp client enable
+  exit
+
+##
+## Routing configuration
+##
+ip default-gateway 10.34.100.254
+
+##
+## Other IP configuration
+##
+hostname Hantoo-HC2
+ip name-server 10.33.17.1
+
+##
+## Local user account configuration
+##
+username admin password 7 $1$w.8fz8DO$QIfrwBzodHhsWueKX9X25/
+lines 1-37 
+##
+## AAA remote server configuration
+##
+# ldap bind-password ********
+# radius-server shared-secret ********
+# tacacs-server shared-secret ********
+
+##
+## AAA configuration
+##
+aaa authentication password remember 0
+
+##
+## Chassis level configurations
+##
+chassis box-id 1 serial-num C42C4 type hc2-v2 gdp disable
+
+##
+## Card level configurations
+##
+card slot 1/1 product-code 132-00BQ
+card slot 1/cc1 product-code 132-00C2
+
+##
+## Port level configurations
+##
+port 1/1/x1 type inline-tool
+port 1/1/x1 alias SSL-VA-1-Up
+port 1/1/x1 params admin enable
+port 1/1/x2 type inline-tool
+port 1/1/x2 alias SSL-VA-1-Down
+port 1/1/x2 params admin enable
+port 1/1/x3 type inline-tool
+port 1/1/x3 alias SSL-VA-2-Up
+port 1/1/x3 params admin enable
+port 1/1/x4 type inline-tool
+lines 38-74 port 1/1/x4 alias SSL-VA-2-Down
+port 1/1/x4 params admin enable
+port 1/1/x5 type inline-tool
+port 1/1/x5 alias IPS-Up
+port 1/1/x5 params admin enable
+port 1/1/x6 type inline-tool
+port 1/1/x6 alias IPS-Down
+port 1/1/x6 params admin enable
+port 1/1/x7 type inline-tool
+port 1/1/x7 alias WebKeeper-Up
+port 1/1/x7 params admin enable
+port 1/1/x8 type inline-tool
+port 1/1/x8 alias WebKeeper-Down
+port 1/1/x8 params admin enable
+port 1/1/x9 type inline-tool
+port 1/1/x9 alias DPI-Up
+port 1/1/x9 params admin enable
+port 1/1/x10 type inline-tool
+port 1/1/x10 alias DPI-Down
+port 1/1/x10 params admin enable
+port 1/1/x11 type inline-tool
+port 1/1/x11 alias WAF-Up
+port 1/1/x11 params admin enable
+port 1/1/x12 type inline-tool
+port 1/1/x12 alias WAF-Down
+port 1/1/x12 params admin enable
+port 1/1/x13 type tool
+port 1/1/x13 alias MDS1
+port 1/1/x13 params admin enable
+port 1/1/x14 type tool
+port 1/1/x14 alias MDS2
+port 1/1/x14 params admin enable
+port 1/1/x15 type network
+port 1/1/x16 type network
+port 1/1/x17 type inline-net
+port 1/1/x17 alias FW-Internet-A
+port 1/1/x17 params admin enable
+lines 75-111 port 1/1/x18 type inline-net
+port 1/1/x18 alias BB-Internet-A
+port 1/1/x18 params admin enable
+port 1/1/x19 type inline-net
+port 1/1/x19 alias FW-Internet-S
+port 1/1/x19 params admin enable
+port 1/1/x20 type inline-net
+port 1/1/x20 alias BB-Internet-S
+port 1/1/x20 params admin enable
+port 1/1/x21 type inline-net
+port 1/1/x21 alias FW-DMZ-A
+port 1/1/x21 params admin enable speed 1000
+port 1/1/x22 type inline-net
+port 1/1/x22 alias SW-DMZ-A
+port 1/1/x22 params admin enable speed 1000
+port 1/1/x23 type inline-net
+port 1/1/x23 alias FW-DMZ-S
+port 1/1/x23 params admin enable speed 1000
+port 1/1/x24 type inline-net
+port 1/1/x24 alias SW-DMZ-S
+port 1/1/x24 params admin enable speed 1000
+
+##
+## Gigastream hash configurations
+##
+gigastream advanced-hash slot 1/cc1 default
+
+##
+## Inline-network configurations
+##
+inline-network alias default_inline_net_1_1_1
+  pair net-a 1/1/x17 and net-b 1/1/x18
+  physical-bypass disable
+  traffic-path to-inline-tool
+  exit
+inline-network alias default_inline_net_1_1_2
+  pair net-a 1/1/x19 and net-b 1/1/x20
+lines 112-148   physical-bypass disable
+  traffic-path to-inline-tool
+  exit
+inline-network alias default_inline_net_1_1_3
+  pair net-a 1/1/x21 and net-b 1/1/x22
+  physical-bypass disable
+  traffic-path to-inline-tool
+  exit
+inline-network alias default_inline_net_1_1_4
+  pair net-a 1/1/x23 and net-b 1/1/x24
+  physical-bypass disable
+  traffic-path to-inline-tool
+  exit
+
+##
+## Inline-tool configurations
+##
+inline-tool alias DPI
+  pair tool-a 1/1/x9 and tool-b 1/1/x10
+  enable
+  heart-beat
+  shared true
+  exit
+inline-tool alias IPS
+  pair tool-a 1/1/x5 and tool-b 1/1/x6
+  enable
+  heart-beat
+  shared true
+  exit
+inline-tool alias SSL-VA1
+  pair tool-a 1/1/x1 and tool-b 1/1/x2
+  enable
+  heart-beat
+  shared true
+  exit
+inline-tool alias SSL-VA2
+  pair tool-a 1/1/x3 and tool-b 1/1/x4
+lines 149-185   enable
+  heart-beat
+  shared true
+  exit
+inline-tool alias WAF
+  pair tool-a 1/1/x11 and tool-b 1/1/x12
+  enable
+  heart-beat
+  shared true
+  exit
+inline-tool alias WebKeeper
+  pair tool-a 1/1/x7 and tool-b 1/1/x8
+  enable
+  shared true
+  exit
+
+##
+## Traffic map connection configurations
+##
+map alias Internet-A-bypass
+  type flexinline byRule
+  roles replace admin to owner_roles
+  rule add pass ipdst 224.0.0.0 240.0.0.0 bidir
+  from default_inline_net_1_1_1
+  a-to-b bypass
+  b-to-a bypass
+  tag 1011
+  exit
+map alias Internet-S-Bypass
+  type flexinline byRule
+  roles replace admin to owner_roles
+  rule add pass ipdst 224.0.0.0 240.0.0.0 bidir
+  from default_inline_net_1_1_2
+  a-to-b bypass
+  b-to-a bypass
+  tag 1012
+  exit
+lines 186-222 map alias DMZ-A-Web
+  type flexinline byRule
+  roles replace admin to owner_roles
+  comment " "
+  rule add pass portsrc 80 bidir
+  rule add pass portsrc 443 bidir
+  from default_inline_net_1_1_3
+  a-to-b IPS,WAF,DPI
+  b-to-a reverse
+  tag 2001
+  exit
+map alias DMZ-S-Web
+  type flexinline byRule
+  roles replace admin to owner_roles
+  comment " "
+  rule add pass portsrc 80 bidir
+  rule add pass portsrc 443 bidir
+  from default_inline_net_1_1_4
+  a-to-b IPS,WAF,DPI
+  b-to-a reverse
+  tag 2002
+  exit
+map alias Internet-S-all
+  type flexinline collector
+  roles replace admin to owner_roles
+  from default_inline_net_1_1_2
+  a-to-b SSL-VA1,DPI,IPS,SSL-VA2,WebKeeper
+  b-to-a reverse
+  tag 1002
+  oob-copy from default_inline_net_1_1_2 to 1/1/x14
+  exit
+map alias Internet-A-all
+  type flexinline collector
+  roles replace admin to owner_roles
+  from default_inline_net_1_1_1
+  a-to-b SSL-VA1,DPI,IPS,SSL-VA2,WebKeeper
+  b-to-a reverse
+lines 223-259   tag 1001
+  oob-copy from default_inline_net_1_1_1 to 1/1/x13
+  exit
+map alias DMZ-A-Other
+  type flexinline collector
+  roles replace admin to owner_roles
+  from default_inline_net_1_1_3
+  a-to-b IPS,DPI
+  b-to-a reverse
+  tag 2003
+  exit
+map alias DMZ-S-Other
+  type flexinline collector
+  roles replace admin to owner_roles
+  from default_inline_net_1_1_4
+  a-to-b IPS,DPI
+  b-to-a reverse
+  tag 2004
+  exit
+
+##
+## AV Policy configurations
+##
+policy alias SSL-VA-port1
+  condition add PortDown param portId 1/1/x1
+  action add PortDisable param portId 1/1/x2,1/1/x3,1/1/x4
+  enable
+  exit
+policy alias SSL-VA-port2
+  condition add PortDown param portId 1/1/x2
+  action add PortDisable param portId 1/1/x1,1/1/x3,1/1/x4
+  enable
+  exit
+policy alias SSL-VA-port3
+  condition add PortDown param portId 1/1/x3
+  action add PortDisable param portId 1/1/x1,1/1/x2,1/1/x4
+  enable
+lines 260-296   exit
+policy alias SSL-VA-port4
+  condition add PortDown param portId 1/1/x4
+  action add PortDisable param portId 1/1/x1,1/1/x2,1/1/x3
+  enable
+  exit
+
+##
+## SNMP configuration
+##
+snmp-server community gksxn1234 
+snmp-server community public 
+snmp-server enable communities
+
+##
+## X.509 certificates configuration
+##
+#
+# Certificate name system-self-signed, ID eb05ba8ace13dd297a888985dea8d57f0d01c89a
+# (public-cert config omitted since private-key config is hidden)
+
+
+##
+## Web configuration
+##
+# web proxy auth basic password ********
+
+##
+## System configuration
+##
+# system security legacy
+
+##
+## Time/NTP configuration
+##
+clock timezone Asia Southeast Seoul
+
+lines 297-333 ##
+## E-mail configuration
+##
+# email auth password ********
+# email autosupport auth password ********
+lines 302-338/338 (END) Hantoo-HC2 #   ?
+aaa              Configure Authentication, Authorization, and Accounting
+boot             Configure system boot parameters
+clear            Reset certain statistics or clear caches
+cli              Configure CLI shell options
+cluster          Configure cluster settings
+configure        Enter configuration mode
+crypto           Configure cryptographic settings
+debug            Debugging commands
+disable          Leave enable mode
+email            Configure email and event notification via email
+exit             Log out of the CLI
+file             Manipulate files on disk
+gs-image         Manipulate gigasmart images.
+help             View description of the interactive help system
+image            Manipulate system software images
+interface        Configure network interfaces
+job              Configure scheduled jobs
+logging          Configure event logging
+no               Negate or clear certain configuration options
+ntpdate          Set system clock once from a remote server using NTP
+ping             Send ICMP echo requests to a specified host
+ping6            Send ICMP6 echo requests to a specified IPv6 host
+reload           Reboot or shut down the system
+show             Display system configuration or status
+sleep            Sleep for a specified number of seconds
+ssh              Configure SSH settings
+system           Change System settings
+terminal         Set terminal parameters
+traceroute       Trace the route packets take to a destination
+ugw-dbg          ugw debug commands
+web              Configure the Web-based management console
+write            Save or display the running configuration
+Hantoo-HC2 #   exit
